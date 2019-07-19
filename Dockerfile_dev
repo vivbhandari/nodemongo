@@ -1,0 +1,20 @@
+FROM alpine:3.9.4
+
+RUN mkdir -p /opt/nodemongo
+
+WORKDIR /opt/nodemongo
+
+COPY index.js .
+
+RUN apk add nodejs
+RUN apk add --update nodejs npm
+
+RUN npm init --yes
+RUN npm i express
+RUN npm i joi
+RUN npm i mongodb
+RUN npm i -g nodemon
+
+EXPOSE 3000
+
+CMD [ "/bin/sh", "-c", "sleep 4 && nodemon" ]

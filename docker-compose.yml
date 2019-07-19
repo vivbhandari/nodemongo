@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    hostname: mongo
+    volumes:
+      - mongodata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - mynet123
+  nodemongo:
+    image: vivekbhandari/nodemongo
+    hostname: nodemongo
+    volumes:
+      - ./:/opt/nodemongo
+    depends_on: 
+      - mongo
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    networks: 
+      - mynet123
+volumes:
+  mongodata:
+networks:
+    mynet123:
+        driver: bridge
+      
